@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Restaurant } from './restaurants/entities/reataurant.entity';
 import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -36,8 +38,7 @@ import { UsersModule } from './users/users.module';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: true,//need to see everything happens in database.if we are in production mode we can make it false.
-      //entities:[Restaurant],//restaurant becomes an entity in database
-      entities:[]
+      entities:[Restaurant,User],//restaurant becomes an entity in database
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -45,8 +46,9 @@ import { UsersModule } from './users/users.module';
       installSubscriptionHandlers: true,
       buildSchemaOptions: {},
     }),
-    //RestaurantsModule,
+    RestaurantsModule,
     UsersModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
