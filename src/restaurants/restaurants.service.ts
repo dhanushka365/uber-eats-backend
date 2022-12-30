@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { ID } from "@nestjs/graphql";
 import { InjectRepository } from "@nestjs/typeorm";
 import {Repository} from 'typeorm'
 import { CreateRestaurantDto } from "./dtos/create-restaurant.dto";

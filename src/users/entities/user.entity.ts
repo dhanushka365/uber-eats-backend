@@ -3,7 +3,6 @@ import { type } from "os";
 import { CoreEntity } from "src/common/entities/core.entity";
 import { Entity ,Column} from "typeorm";
 
-//type UserRole = 'client' | 'owner' | 'delivery';
 
 enum UserRole {
     Client,
@@ -11,6 +10,7 @@ enum UserRole {
     Delivery,
 }
 
+//create enum on graphql
 registerEnumType(UserRole , {name:'UserRole'});
 
 
