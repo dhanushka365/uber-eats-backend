@@ -4,6 +4,7 @@ import {Repository,FindOptionsWhere} from 'typeorm'
 import { Injectable } from "@nestjs/common";
 import { CreateAccountInput } from "./dtos/create-account.dto";
 import { IsEmail } from "class-validator";
+import { LoginInput } from "./dtos/login.dto";
 
 
 @Injectable()
@@ -24,6 +25,41 @@ export class UsersService {
         }catch (e) {
          return [false,"Couldn't create account"];
      }
+    }
+
+
+    async login({
+        email ,
+        password,
+    }: LoginInput): Promise<{ok:boolean; error?:string, token?:string}>{
+
+        try {
+            const user = await this.users.findOneBy({ email:email } as FindOptionsWhere<User>);
+            if(!user){
+                return{
+                    ok:false,
+                    error: 'user not found',       
+                };
+            }
+            const passwordCorrect = await user.checkPassword(password);
+            if (!passwordCorrect) {
+                return{
+                    ok:false,
+                    error: 'worng password',
+                    
+                };
+            }
+            return{
+                ok:true,
+                token:'lalalalalala',
+            };
+
+        } catch (error) {
+            return{
+                ok:false,
+                error,   
+            };
+        }
     }
 }
 
