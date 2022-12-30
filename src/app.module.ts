@@ -9,6 +9,7 @@ import { Restaurant } from './restaurants/entities/reataurant.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { CommonModule } from './common/common.module';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { CommonModule } from './common/common.module';
           DB_USERNAME: Joi.string().required(),
           DB_PASSWORD: Joi.string().required(),
           DB_NAME: Joi.string().required(),
-
+          SECRET_KEY:Joi.string().required(),
         })
 
       }
@@ -40,6 +41,8 @@ import { CommonModule } from './common/common.module';
       logging: true,//need to see everything happens in database.if we are in production mode we can make it false.
       entities:[Restaurant,User],//restaurant becomes an entity in database
     }),
+
+    //dynamic module
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
@@ -49,6 +52,7 @@ import { CommonModule } from './common/common.module';
     RestaurantsModule,
     UsersModule,
     CommonModule,
+    JwtModule,//static module
   ],
   controllers: [],
   providers: [],
