@@ -52,7 +52,9 @@ import { JwtModule } from './jwt/jwt.module';
     RestaurantsModule,
     UsersModule,
     CommonModule,
-    JwtModule,//static module
+    JwtModule.forRoot({
+      privateKey: process.env.SECRET_KEY,
+    }),//static module
   ],
   controllers: [],
   providers: [],

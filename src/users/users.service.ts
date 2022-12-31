@@ -7,14 +7,15 @@ import { IsEmail } from "class-validator";
 import { LoginInput } from "./dtos/login.dto";
 import * as jwt from "jsonwebtoken";
 import { ConfigService } from "@nestjs/config";
+import { JwtService } from "src/jwt/jwt.service";
 
 
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User) private readonly users: Repository<User>,
-    private readonly config:ConfigService,
+    private readonly jwtService: JwtService,
     ){
-       
+        
     } 
 
 
@@ -55,7 +56,7 @@ export class UsersService {
                     
                 };
             }
-            const token= jwt.sign({id:user.id}, this.config.get('SECRET_KEY'));
+            const token= this.jwtService.sign({id:user.id});
             return{
                 ok:true,
                 token,
